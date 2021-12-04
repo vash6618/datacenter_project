@@ -5,7 +5,8 @@ from events.callbacks import consume_restaurant_data
 
 async def connect_to_queue(loop):
     # Perform connection
-    connection = await connect(RabbitmqBroker.address, loop=loop)
+    # print(RabbitmqBroker.address)
+    connection = await connect(host=RabbitmqBroker.address, loop=loop)
     print(connection)
     # Creating a channel
     channel = await connection.channel()

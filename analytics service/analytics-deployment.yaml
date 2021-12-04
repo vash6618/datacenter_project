@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-deployment
+  labels:
+    app: analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+      - name: analytics
+        image: gcr.io/datacenter-csci-5253/analytics:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq

@@ -21,7 +21,8 @@ if __name__ == "__main__":
         create_dataset(DBConstants.dataset_name)
         create_table(DBConstants.table_name)
 
-    from routes import init_routes
-    init_routes(app)
+    @app.route('/')
+    async def health(request):
+        return {"Success": 200}
 
     app.run(host="0.0.0.0", port=os.environ.get('PORT') or 5001)

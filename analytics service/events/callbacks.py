@@ -1,13 +1,14 @@
 from aio_pika import IncomingMessage
-import boto3
 import logging, pickle
-
-from botocore.exceptions import ClientError
-from config import BucketConfig
 import matplotlib.pyplot as plt
 from config import DBConstants, BucketConfig
 from google.cloud import storage
-from matplotlib.backends import backend_pdf
+from google.oauth2 import service_account
+# from matplotlib.backends import backend_pdf
+import logging
+logging.basicConfig(format="%(message)s")
+logging.root.setLevel(logging.INFO)
+
 
 
 def plot_graph_ratings(x_values, y_values, x_label, y_label, title):
@@ -37,10 +38,15 @@ def plot_graph_reviews(x_values, y_values, x_label, y_label, title):
 def upload_file():
     """Upload a file to an Cloud bucket
     """
-    client = storage.Client()
+    key_path = 'pod-key.json'
+    credentials = service_account.Credentials.from_service_account_file(
+        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = storage.Client(credentials=credentials, project=credentials.project_id)
     bucket = client.get_bucket(BucketConfig.Bucket_name)
-    object_name_in_gcs_bucket = bucket.blob('test1.py')
-    object_name_in_gcs_bucket.upload_from_filename('test1.py')
+    logging.info(bucket)
+    # object_name_in_gcs_bucket = bucket.blob('test1.py')
+    # object_name_in_gcs_bucket.upload_from_filename('test1.py')
 
 
 def perform_analysis(table_name):
@@ -51,10 +57,10 @@ def perform_analysis(table_name):
         """.format(table_id)
     query_job = db.query(query)  # Make an API request.
 
-    print("The query data:")
+    logging.info("The query data:")
     for row in query_job:
         # Row values can be accessed by field name or index.
-        print("total-cnt {}".format(row["total_cnt"]))
+        logging.info("total-cnt {}".format(row["total_cnt"]))
 
 
 def table_insert_rows(table_name, message):

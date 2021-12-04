@@ -1,10 +1,14 @@
 from google.cloud import bigquery
-# pylint: disable=invalid-name
-# Connect to the database
+import logging
+from google.oauth2 import service_account
+logging.basicConfig(format="%(message)s")
+logging.root.setLevel(logging.INFO)
+
 db = None
 
 
 async def connect_db():
     global db
-    db = bigquery.Client()
-    print(db)
+    key_path = 'pod-key.json'
+    db = bigquery.Client.from_service_account_json(key_path)
+    logging.info(db)

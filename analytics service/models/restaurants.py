@@ -1,7 +1,11 @@
 from models import db
 from google.cloud import bigquery
+import logging
 from google.api_core.exceptions import Conflict
 from config import DBConstants
+
+logging.basicConfig(format="%(message)s")
+logging.root.setLevel(logging.INFO)
 
 
 def create_dataset(dataset_name):
@@ -14,9 +18,9 @@ def create_dataset(dataset_name):
         # Raises google.api_core.exceptions.Conflict if the Dataset already
         # exists within the project.
         dataset = db.create_dataset(dataset, timeout=30)  # Make an API request.
-        print("Created dataset {}.{}".format(db.project, dataset.dataset_id))
+        logging.info("Created dataset {}.{}".format(db.project, dataset.dataset_id))
     except Conflict as e:
-        print(e)
+        logging.info(e)
     # [END bigquery_create_dataset]
 
 
@@ -42,8 +46,8 @@ def create_table(table_name):
 
         table = bigquery.Table(table_id, schema=schema)
         table = db.create_table(table)  # Make an API request.
-        print(
+        logging.info(
             "Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id)
         )
     except Conflict as e:
-        print(e)
+        logging.info(e)
