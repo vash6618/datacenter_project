@@ -65,11 +65,9 @@ def perform_analysis(table_name):
 
 def table_insert_rows(table_name, message):
     from models import db
-    table_id = db.project + '.' + DBConstants.dataset_name + '.' + table_name
-
-    # TODO(developer): Set table_id to the ID of table to append to.
     # table_id = "your-project.your_dataset.your_table"
-    rows_to_insert = [message]
+    table_id = db.project + '.' + DBConstants.dataset_name + '.' + table_name
+    rows_to_insert = message
 
     errors = db.insert_rows_json(table_id, rows_to_insert)  # Make an API request.
     if errors == []:
@@ -80,7 +78,7 @@ def table_insert_rows(table_name, message):
 
 async def consume_restaurant_data(message: IncomingMessage):
     message_body = pickle.loads(message.body)
-    # table_insert_rows(DBConstants.table_name, message_body)
+    table_insert_rows(DBConstants.table_name, message_body)
     perform_analysis(DBConstants.table_name)
     upload_file()
 
