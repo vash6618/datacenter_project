@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: periodic-deployment
+  labels:
+    app: periodic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: periodic
+  template:
+    metadata:
+      labels:
+        app: periodic
+    spec:
+      containers:
+      - name: periodic
+        image: gcr.io/datacenter-csci-5253/periodic:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq

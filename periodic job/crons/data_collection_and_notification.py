@@ -5,8 +5,8 @@ from models.restaurants import Restaurants
 from models import db, es
 from utils.rabbitmq import send_message
 import pickle
-
-logger = logging.getLogger(__name__)
+logging.basicConfig(format="%(message)s")
+logging.root.setLevel(logging.INFO)
 
 
 async def yelp_request(host, path, api_key, url_params=None):
@@ -61,18 +61,21 @@ async def fetch_data_and_notify() -> None:
                               'image_url': restaurant.get('image_url'), 'review_count': restaurant.get('review_count'),
                               'rating': restaurant.get('rating'), 'address': restaurant.get('location').get('display_address')[0],
                               'phone': restaurant.get('phone'), 'categories':
-                                  get_restaurant_categories(restaurant.get('categories')), 'price': restaurant.get('price')}
+                                  get_restaurant_categories(restaurant.get('categories')), 'price': restaurant.get('price'),
+                              'city': restaurant.get('location').get('city'), 'distance': restaurant.get('distance'),
+                              'zip_code': restaurant.get('location').get('zip_code'),
+                              'state': restaurant.get('location').get('state')
+    }
                              for restaurant in restaurants]
-    print(db_restaurant_objects)
 
     set_api_offset()
-    import random
     async with db.transaction():
         await Restaurants.insert().values(db_restaurant_objects).gino.scalar()
         for restaurant in db_restaurant_objects:
             resp = es.index(index=DBConstants.ES_index_name, document=restaurant)
+
         byte_message = pickle.dumps(db_restaurant_objects)
-        # await send_message(byte_message)
+        await send_message(byte_message)
 
 
 

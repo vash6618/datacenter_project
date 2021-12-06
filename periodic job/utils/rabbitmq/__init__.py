@@ -7,7 +7,7 @@ connection = None
 async def connect_broker(loop):
     # Perform connection
     global connection
-    connection = await connect(RabbitmqBroker.address, loop=loop)
+    connection = await connect(host=RabbitmqBroker.address, loop=loop)
     print(connection)
 
 
@@ -19,7 +19,7 @@ async def send_message(message):
     # Sending the message
     await channel.default_exchange.publish(
         routing_key=RabbitmqBroker.restaurant_data_notify_queue,
-        message=message
+        message=Message(body=message)
     )
 
     print(" [x] Sent message for analysis")
