@@ -26,3 +26,16 @@ async def get_restaurants(request):
     final_result["restaurants"] = final_list
 
     return response.json(final_result)
+
+
+@data_analyser_bp.route('/search_restaurants', methods=['POST'])
+async def get_restaurants(request):
+    from models import es
+    search_term = request.json.get('search_term')
+    resp = es.search(index="restaurants", query={"query_string": {'query': search_term}})
+    print("Got %d Hits:" % resp['hits']['total']['value'])
+    final_result = {'restaurants': []}
+    for hit in resp['hits']['hits']:
+        final_result['restaurants'].append(hit['_source'])
+
+    return response.json(final_result)
