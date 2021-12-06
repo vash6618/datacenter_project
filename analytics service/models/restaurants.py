@@ -30,18 +30,20 @@ def create_table(table_name):
     try:
         table_id = db.project + '.' + DBConstants.dataset_name + '.' + table_name
         schema = [
-            bigquery.SchemaField("alias", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("name", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("rating", "FLOAT64", mode="REQUIRED"),
-            bigquery.SchemaField("price", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("phone", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("distance", "FLOAT64", mode="REQUIRED"),
-            bigquery.SchemaField("zip_code", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("city", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("state", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("address", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("review_count", "NUMERIC", mode="REQUIRED"),
+            bigquery.SchemaField("alias", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("rating", "FLOAT64", mode="NULLABLE"),
+            bigquery.SchemaField("price", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("phone", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("distance", "FLOAT64", mode="NULLABLE"),
+            bigquery.SchemaField("zip_code", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("city", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("state", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("address", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("review_count", "NUMERIC", mode="NULLABLE"),
             bigquery.SchemaField("categories", "STRING", mode="REPEATED"),
+            bigquery.SchemaField("external_id", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("image_url", "STRING", mode="NULLABLE")
         ]
 
         table = bigquery.Table(table_id, schema=schema)

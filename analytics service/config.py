@@ -3,8 +3,7 @@ import os
 
 class RabbitmqBroker:
     address = os.getenv('RABBITMQ_HOST', "amqp://guest:guest@localhost/")
-    # restaurant_data_queue = 'restaurant_data_notify'
-    restaurant_data_queue = 'test_queue'
+    restaurant_data_queue = 'restaurant_data_notify'
 
 
 class DBConstants:
