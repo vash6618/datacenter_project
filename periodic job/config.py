@@ -14,8 +14,10 @@ class YELP_API:
 
 class DBConstants:
     DB_address = str(os.getenv('DATABASE_URL', 'postgresql://postgres:admin@10.42.96.3:5432/restaurant_database'))
-                                                            #user:password
+    # DB_address = str(os.getenv('DATABASE_URL', 'postgresql://postgres:admin@34.132.60.82:5432/restaurant_database'))
+    #user:password
     ES_adddress = str(os.getenv('ES_URL', 'http://10.28.9.96:9200'))
+    # ES_adddress = str(os.getenv('ES_URL', 'http://localhost:9200'))
     ES_index_name = 'restaurants'
 
 
