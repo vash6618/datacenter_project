@@ -1,7 +1,7 @@
 import pika, os, pickle
 import sys
 
-rabbitMQHost = os.getenv("RABBITMQ_HOST") or "0.0.0.0"
+rabbitMQHost = os.getenv("RABBITMQ_HOST") or "localhost"
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=rabbitMQHost))
