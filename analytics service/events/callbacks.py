@@ -44,8 +44,12 @@ def upload_file():
     client = storage.Client(credentials=credentials, project=credentials.project_id)
     bucket = client.get_bucket(BucketConfig.Bucket_name)
     logging.info(bucket)
-    # object_name_in_gcs_bucket = bucket.blob('test1.py')
-    # object_name_in_gcs_bucket.upload_from_filename('test1.py')
+    for i in range(4):
+        object_name_in_gcs_bucket = bucket.blob('/srv/restaurants_vs_price_{}.png'.format(i+1))
+        object_name_in_gcs_bucket.upload_from_filename('/srv/restaurants_vs_price_{}.png'.format(i+1))
+        object_name_in_gcs_bucket = bucket.blob('/srv/price_vs_restaurants_{}.png'.format(i + 1))
+        object_name_in_gcs_bucket.upload_from_filename('/srv/price_vs_restaurants_{}.png'.format(i + 1))
+
 
 def perform_analysis(query):
     from models import db
@@ -63,18 +67,18 @@ def analytics(table_name):
     from models import db
     table_id = db.project + '.' + DBConstants.dataset_name + '.' + table_name
     prices = ['$', '$$', '$$$', '$$$$']
-    # for i in range(1, 5):
-    #     cnt = []
-    #     for price in prices:
-    #         query = """
-    #                 SELECT COUNT(name) as restaurants FROM {} where price='{}' and rating >= {}
-    #             """.format(table_id, price, i)
-    #         cnt.append(perform_analysis(query))
-    #     print(cnt)
-    #     x_values = [1,2,3,4]
-    #     y_values = cnt
-    #     plot_graph_ratings(x_values, ['$', '$\$', '$\$\$', '$\$\$\$'], y_values, 'price', 'restaurants',
-    #                        'restaurants vs price', 'restaurants_vs_price_{}.png'.format(i))
+    for i in range(1, 5):
+        cnt = []
+        for price in prices:
+            query = """
+                    SELECT COUNT(name) as restaurants FROM {} where price='{}' and rating >= {}
+                """.format(table_id, price, i)
+            cnt.append(perform_analysis(query))
+        print(cnt)
+        x_values = [1,2,3,4]
+        y_values = cnt
+        plot_graph_ratings(x_values, ['$', '$\$', '$\$\$', '$\$\$\$'], y_values, 'price', 'restaurants',
+                           'restaurants vs price', 'restaurants_vs_price_{}.png'.format(i))
     ind = 1
     for price in prices:
         cnt = []
@@ -113,8 +117,8 @@ async def consume_restaurant_data(message: IncomingMessage):
     logging.info('Inserting data')
     message_body = pickle.loads(message.body)
     table_insert_rows(DBConstants.table_name, message_body)
-    # analytics(DBConstants.table_name)
-    # upload_file()
+    analytics(DBConstants.table_name)
+    upload_file()
 
     # print(message_body)
     # tuples = await db.status(db.text("select rating, review_count from restaurants"))
