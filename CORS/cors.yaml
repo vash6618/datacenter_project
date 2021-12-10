@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cors
+  labels:
+    name: cors
+spec:
+  containers:
+  - name: cors
+    image: gcr.io/third-pen-318122/cors:latest
+    env:
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+    ports:
+    - containerPort: 5005
+      name: cors
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cors-service
+spec:
+  type: LoadBalancer
+  selector:
+    name: cors
+  ports:
+    - protocol: TCP
+      port: 5005
+      targetPort: 5005
+      nodePort: 30900 # range(30000-32767)
