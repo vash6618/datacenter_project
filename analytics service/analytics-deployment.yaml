@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: analytics
-        image: gcr.io/datacenter-csci-5253/analytics:latest
+        image: gcr.io/third-pen-318122/analytics:latest
         ports:
         - containerPort: 5001
         env:

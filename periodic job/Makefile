@@ -4,5 +4,5 @@ build:
 	docker build -t periodic .
 
 push:
-	docker tag periodic gcr.io/datacenter-csci-5253/periodic
-	docker push gcr.io/datacenter-csci-5253/periodic
+	docker tag periodic gcr.io/third-pen-318122/periodic
+	docker push gcr.io/third-pen-318122/periodic

@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: database
-        image: gcr.io/datacenter-csci-5253/database:latest
+        image: gcr.io/third-pen-318122/database:latest
         ports:
         - containerPort: 5001

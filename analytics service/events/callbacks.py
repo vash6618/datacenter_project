@@ -15,11 +15,11 @@ def plot_graph_ratings(x_values, x_ticks, y_values, x_label, y_label, title, sav
     '''plot a bar graph'''
     plt.figure()
     plt.bar(x=x_values, height=y_values)
-    plt.ylim(0, 60)
+    plt.ylim(0, 400)
     plt.xticks(x_values, x_ticks)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    plt.title(title)
+    # plt.title(title)
     plt.savefig(save_format)
 
 
@@ -54,8 +54,6 @@ def upload_file():
 def perform_analysis(query):
     from models import db
     query_job = db.query(query)  # Make an API request.
-
-    logging.info("The query data:")
     cnt = 0
     for row in query_job:
         # Row values can be accessed by field name or index.
@@ -78,7 +76,7 @@ def analytics(table_name):
         x_values = [1,2,3,4]
         y_values = cnt
         plot_graph_ratings(x_values, ['$', '$\$', '$\$\$', '$\$\$\$'], y_values, 'price', 'restaurants',
-                           'restaurants vs price', 'restaurants_vs_price_{}.png'.format(i))
+                           '', 'restaurants_vs_price_{}.png'.format(i))
     ind = 1
     for price in prices:
         cnt = []
@@ -90,8 +88,8 @@ def analytics(table_name):
         print(cnt)
         x_values = [1,2,3,4]
         y_values = cnt
-        plot_graph_ratings(x_values, ['1-2', '2-3', '3-4', '4-5'], y_values, 'price', 'restaurants',
-                           'price {} vs restaurant'.format(ind), 'price_vs_restaurants_{}.png'.format(ind))
+        plot_graph_ratings(x_values, ['1-2', '2-3', '3-4', '4-5'], y_values, 'restaurant ratings', 'restaurants',
+                           '', 'price_vs_restaurants_{}.png'.format(ind))
         ind += 1
 
 
@@ -118,7 +116,7 @@ async def consume_restaurant_data(message: IncomingMessage):
     message_body = pickle.loads(message.body)
     table_insert_rows(DBConstants.table_name, message_body)
     analytics(DBConstants.table_name)
-    upload_file()
+    # upload_file()
 
     # print(message_body)
     # tuples = await db.status(db.text("select rating, review_count from restaurants"))

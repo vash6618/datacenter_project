@@ -7,7 +7,7 @@ connection = None
 async def connect_broker(loop):
     # Perform connection
     global connection
-    connection = await connect(RabbitmqBroker.address, loop=loop)
+    connection = await connect(host=RabbitmqBroker.address, loop=loop)
     print(connection)
 
 

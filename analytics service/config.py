@@ -12,4 +12,4 @@ class DBConstants:
 
 
 class BucketConfig:
-    Bucket_name = str(os.getenv('BUCKET_NAME', 'datacenter-analytics'))
+    Bucket_name = str(os.getenv('BUCKET_NAME', 'datacenter-analysis'))
