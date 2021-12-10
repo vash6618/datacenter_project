@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: periodic
-        image: gcr.io/datacenter-csci-5253/periodic:latest
+        image: gcr.io/third-pen-318122/periodic:latest
         ports:
         - containerPort: 5001
         env:

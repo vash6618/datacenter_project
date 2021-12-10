@@ -43,7 +43,8 @@ def create_table(table_name):
             bigquery.SchemaField("review_count", "NUMERIC", mode="NULLABLE"),
             bigquery.SchemaField("categories", "STRING", mode="REPEATED"),
             bigquery.SchemaField("external_id", "STRING", mode="REQUIRED"),
-            bigquery.SchemaField("image_url", "STRING", mode="NULLABLE")
+            bigquery.SchemaField("image_url", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("id", "NUMERIC", mode="NULLABLE")
         ]
 
         table = bigquery.Table(table_id, schema=schema)

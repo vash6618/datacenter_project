@@ -1,7 +1,6 @@
 import pika, os, pickle
 import sys
 
-
 rabbitMQHost = os.getenv("RABBITMQ_HOST") or "localhost"
 
 connection = pika.BlockingConnection(
@@ -22,8 +21,9 @@ data = [{
             "address": "1535 Pearl St",
             "state": "CO",
             "phone": "+13035460886",
-            "distance": 2693.0322782379153
+            "distance": 2693.0322782379153,
+            "external_id": "1LMe5UqMS2ei_ubt46FbNA"
         }]
-channel.basic_publish(exchange='', routing_key='test_queue', body=pickle.dumps(data))
+channel.basic_publish(exchange='', routing_key='test_notify', body=pickle.dumps(data))
 print('published')
 connection.close()

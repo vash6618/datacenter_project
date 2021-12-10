@@ -16,6 +16,7 @@ async def send_message(message):
     # Creating a channel
     channel = await connection.channel()
 
+
     # Sending the message
     await channel.default_exchange.publish(
         routing_key=RabbitmqBroker.restaurant_data_notify_queue,

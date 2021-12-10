@@ -70,12 +70,13 @@ async def fetch_data_and_notify() -> None:
 
     set_api_offset()
     async with db.transaction():
-        await Restaurants.insert().values(db_restaurant_objects).gino.scalar()
-        for restaurant in db_restaurant_objects:
+        # values = await Restaurants.insert().values(db_restaurant_objects).returning(Restaurants.id).gino.all()
+        for i in range(len(db_restaurant_objects)):
+            restaurant = db_restaurant_objects[i]
+            restaurant['id'] = i + get_api_offset() + 1
             resp = es.index(index=DBConstants.ES_index_name, document=restaurant)
-
-        byte_message = pickle.dumps(db_restaurant_objects)
-        await send_message(byte_message)
+        # byte_message = pickle.dumps(db_restaurant_objects)
+        # await send_message(byte_message)
 
 
 

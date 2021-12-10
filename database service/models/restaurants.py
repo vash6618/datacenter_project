@@ -15,3 +15,7 @@ class Restaurants(db.Model):
     phone = db.Column(db.String())
     categories = db.Column(db.ARRAY(db.String()))
     price = db.Column(db.String())
+    city = db.Column(db.String())
+    distance = db.Column(db.Float())
+    zip_code = db.Column(db.String())
+    state = db.Column(db.String())

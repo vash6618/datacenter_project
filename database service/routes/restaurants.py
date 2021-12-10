@@ -21,7 +21,8 @@ async def get_restaurants(request):
         final_list.append({'id': restaurant.id, 'name': restaurant.name, 'external_id': restaurant.external_id,
                            'image_url': restaurant.image_url, 'review_count': restaurant.review_count,
                            'rating': restaurant.rating, 'address': restaurant.address, 'phone': restaurant.phone,
-                           'categories': restaurant.categories, 'price': restaurant.price})
+                           'categories': restaurant.categories, 'price': restaurant.price,
+                           'city': restaurant.city, 'state': restaurant.state, 'zip_code': restaurant.zip_code})
 
     final_result["restaurants"] = final_list
 
