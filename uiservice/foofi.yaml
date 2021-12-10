@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
   - name: foofi
-    image: gcr.io/sapient-zodiac-304803/foofi:latest
+    image: gcr.io/third-pen-318122/foofi:latest
     env:
       - name: MY_POD_IP
         valueFrom:
@@ -17,8 +17,6 @@ spec:
     ports:
     - containerPort: 3000
       name: react
-    - containerPort: 5005
-      name: cors
 ---
 apiVersion: v1
 kind: Service

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './css/restaurants.css'
-import { Badge } from 'react-bootstrap';
+import { Badge, Image } from 'react-bootstrap';
 
 
 const RestaurantPage = () =>  {
@@ -33,15 +33,13 @@ const RestaurantPage = () =>  {
     return (
         <div className="pad">
             <h1>{restaurant["name"]}</h1>
-            <div className="row mb-3">
-                <div className="col-sm-2">Rating: {restaurant["rating"]} <br/></div>
-                <div className="col-sm-2">Review Count: {restaurant["review_count"]} <br/></div>
-                <div className="col-sm-1">Price: {restaurant["price"]} <br/></div>
-            </div>
-            <img className="mb-3" src={restaurant["image_url"]} style={{ width: '28rem', height: '22rem' }} alt=""/>
+            <Image className="mb-3" src={restaurant["image_url"]} style={{ width: '28rem', height: '22rem' }} rounded />
             <div>
-                {restaurant["categories"].map((cat, index) => <Badge bg="warning" text="dark" key={index} style={{marginRight:"5px"}}>{cat}</Badge> )} <br/>
-                Address: {restaurant["address"]} <br/>
+                {restaurant["categories"].map((cat, index) => <Badge bg="warning" text="dark" key={index} style={{marginRight:"5px"}} className="mb-2">{cat}</Badge> )} <br/>
+                <div>Rating: {restaurant["rating"]} </div>
+                <div>Review Count: {restaurant["review_count"]} </div>
+                <div>Price: {restaurant["price"]} </div>
+                Address: <a href={"https://www.google.com/maps/place/"+restaurant["address"] + " " + restaurant["city"] + " " + restaurant["state"] + " " + restaurant["zip_code"]}> {restaurant["address"] + " " + restaurant["city"] + " " + restaurant["state"] + " " + restaurant["zip_code"]}</a> <br/>
                 Phone: {restaurant["phone"]} <br/>
             </div>
         </div>

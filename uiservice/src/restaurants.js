@@ -42,12 +42,8 @@ const Restaurants = () =>  {
     
     return (
         <div className="pad">
-            <h1>Restaurant Details </h1>
+            <h1>Browse Restaurants</h1>
             <br/>
-            <p>
-                Search Results:
-                {/* {restaurant["businesses"].map(list_restaurants)} */}
-            </p>
             <div> 
                 <InfiniteScroll
                     dataLength={items === null ? 0 : items.length}
